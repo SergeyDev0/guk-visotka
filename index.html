@@ -1,0 +1,1376 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ООО "ГУК Высотка" - Управление жилыми комплексами</title>
+    <style>
+        /* Reset и базовые стили */
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #4b5563;
+            --accent: #3b82f6;
+            --light: #f9fafb;
+            --dark: #111827;
+            --text: #374151;
+            --text-light: #6b7280;
+            --text-dark: #f3f4f6;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 10px 15px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --border-radius: 12px;
+            --section-padding: 100px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: white;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--accent);
+            transition: var(--transition);
+        }
+
+        a:hover {
+            color: var(--primary-dark);
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Типография */
+        h1, h2, h3, h4 {
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 0.75em;
+        }
+
+        p {
+            margin-bottom: 1em;
+        }
+
+        /* БЭМ блоки */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Шапка */
+        .header {
+            background-color: white;
+            color: var(--dark);
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .header__inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header__logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark);
+            display: flex;
+            align-items: flex-end;
+            gap: 10px;
+						line-height: 1;
+        }
+
+        .header__logo-icon {
+            width: 32px;
+            height: 32px;
+        }
+
+        .nav__toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--dark);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .nav__list {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav__item {
+            position: relative;
+        }
+
+        .nav__link {
+            color: var(--text);
+            font-weight: 500;
+            font-size: 1rem;
+            padding: 8px 0;
+            transition: var(--transition);
+        }
+
+        .nav__link:hover {
+            color: var(--primary);
+        }
+
+        .nav__link--active {
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        /* Герой-секция */
+        .hero {
+            background: linear-gradient(135deg, #f0f7ff 0%, #e6f0ff 100%);
+            color: var(--dark);
+            padding: 180px 0 100px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero__inner {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero__content {
+            flex: 1;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .hero__title {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+        }
+
+        .hero__subtitle {
+            font-size: 1.25rem;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            color: var(--secondary);
+            font-weight: 400;
+            line-height: 1.6;
+        }
+
+        .hero__buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 2rem;
+            justify-content: center;
+        }
+
+        .hero__image {
+            display: none;
+        }
+
+        .hero__pattern {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiBmaWxsPSJub25lIiBzdHJva2U9IiMyNTYzZWJmZiI+PHBhdGggZD0iTTAgMEg0MFY0MEgweiIgZmlsbD0iI2YwZjdmZiIvPjxwYXRoIGQ9Ik0wIDBINDBWNDBIMHoiIGZpbGw9IiNmMGY3ZmYiLz48cGF0aCBkPSJNMjAgMjBINDBWMjBIMHoiIGZpbGw9IiNlNmYwZmYiLz48cGF0aCBkPSJNMjAgMjBINDBWMjBIMHoiIGZpbGw9IiNlNmYwZmYiLz48L3N2Zz4=');
+            opacity: 0.3;
+            z-index: 1;
+        }
+
+        /* Секции */
+        .section {
+            padding: var(--section-padding) 0;
+            position: relative;
+        }
+
+        .section--light {
+            background-color: white;
+        }
+
+        .section--gray {
+            background-color: var(--light);
+        }
+
+        .section--dark {
+            background-color: var(--dark);
+            color: white;
+        }
+
+        .section__title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: inherit;
+            position: relative;
+        }
+
+        .section__title span {
+            color: var(--primary);
+        }
+
+        .section__subtitle {
+            text-align: center;
+            font-size: 1.25rem;
+            max-width: 700px;
+            margin: 0 auto 4rem;
+            color: var(--text-light);
+        }
+
+        .section__header {
+            margin-bottom: 4rem;
+            text-align: center;
+        }
+
+        /* Карточки */
+        .card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 2.5rem;
+            transition: var(--transition);
+            height: 100%;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .card__icon {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(37, 99, 235, 0.1);
+            border-radius: 12px;
+        }
+
+        .card__icon svg {
+            width: 30px;
+            height: 30px;
+            color: var(--primary);
+        }
+
+        .card__title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: inherit;
+        }
+
+        .card__text {
+            color: var(--text-light);
+            margin-bottom: 0;
+        }
+
+        .card__link {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-weight: 500;
+            color: var(--primary);
+        }
+
+        .card__link svg {
+            width: 16px;
+            height: 16px;
+            transition: var(--transition);
+        }
+
+        .card__link:hover svg {
+            transform: translateX(3px);
+        }
+
+        .card--dark {
+            background-color: var(--dark);
+            color: white;
+        }
+
+        .card--dark .card__text {
+            color: var(--text-dark);
+            opacity: 0.8;
+        }
+
+        /* Сетка */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        /* Карта */
+        .map {
+            height: 400px;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            background-color: #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            font-size: 1rem;
+            position: relative;
+        }
+
+        .map__placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .map__placeholder-icon {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        /* Форма */
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 2.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group__label {
+            display: block;
+            margin-bottom: 0.75rem;
+            font-weight: 500;
+            font-size: 1rem;
+            color: var(--text);
+        }
+
+        .form-group__input,
+        .form-group__textarea {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: var(--transition);
+            background-color: #f9fafb;
+        }
+
+        .form-group__input:focus,
+        .form-group__textarea:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+            background-color: white;
+        }
+
+        .form-group__textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        /* Кнопки */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem 2rem;
+            border: 2px solid var(--primary);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .btn:hover {
+            background-color: #fff;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .btn--secondary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem 2rem;
+            border: 2px solid var(--primary);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .btn--secondary:hover {
+            background-color: #fff;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .btn--block {
+            display: block;
+            width: 100%;
+        }
+
+        .btn__icon {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* Реквизиты */
+        .requisites {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.95rem;
+            line-height: 1.8;
+            background: white;
+            padding: 2.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+
+        .requisites__item {
+            margin-bottom: 0.75rem;
+            display: flex;
+            gap: 10px;
+        }
+
+        .requisites__label {
+            font-weight: 500;
+            min-width: 110px;
+            color: var(--text);
+        }
+
+        .requisites__value {
+            color: var(--text);
+            flex: 1;
+        }
+
+        /* График работы */
+        .schedule {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+
+        .schedule__item {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem 0;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .schedule__item:last-child {
+            border-bottom: none;
+        }
+
+        .schedule__days {
+            font-weight: 500;
+						color: var(--dark);
+        }
+
+        .schedule__time {
+            color: var(--text-light);
+        }
+
+        /* Вакансии */
+        .vacancy {
+            border-left: 4px solid var(--primary);
+            padding-left: 1.5rem;
+            background: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .vacancy:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .vacancy__title {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .vacancy__salary {
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: inline-block;
+            background-color: rgba(37, 99, 235, 0.1);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .vacancy__meta {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .vacancy__meta-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .vacancy__meta-icon {
+            width: 16px;
+            height: 16px;
+            color: var(--primary);
+        }
+
+        /* Футер */
+        .footer {
+            background-color: var(--dark);
+            color: var(--text-dark);
+            padding: 5rem 0 2rem;
+        }
+
+        .footer__grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 4rem;
+        }
+
+        .footer__col {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .footer__logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer__logo-icon {
+            width: 32px;
+            height: 32px;
+        }
+
+        .footer__description {
+            opacity: 0.7;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .footer__title {
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+
+        .footer__contact {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .footer__contact-icon {
+            width: 18px;
+            height: 18px;
+            color: var(--primary);
+            flex-shrink: 0;
+            margin-top: 3px;
+        }
+
+        .footer__contact a {
+            color: var(--text-dark);
+						opacity: 0.8;
+						font-weight: 400;
+            transition: var(--transition);
+        }
+
+        .footer__contact > div > a {
+						font-weight: 400;
+						color: var(--dark);
+						opacity: 0.8;
+				}
+
+        .footer__contact a:hover {
+            color: var(--primary);
+            opacity: 1;
+        }
+
+        .footer__social {
+            display: flex;
+            gap: 15px;
+            margin-top: 1.5rem;
+        }
+
+        .footer__social-link {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .footer__social-link:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .footer__social-icon {
+            width: 20px;
+            height: 20px;
+            color: white;
+        }
+
+        .footer__copy {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-dark);
+            font-size: 0.9rem;
+            opacity: 0.6;
+        }
+
+        /* Декоративные элементы */
+        .decoration {
+            position: absolute;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .decoration--circle {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.1) 0%, rgba(37, 99, 235, 0) 70%);
+        }
+
+        /* Анимации */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        .delay-1 {
+            animation-delay: 0.15s;
+        }
+
+        .delay-2 {
+            animation-delay: 0.3s;
+        }
+
+        .delay-3 {
+            animation-delay: 0.45s;
+        }
+
+        /* Адаптивность */
+        @media (min-width: 992px) {
+            .hero__title {
+                font-size: 3.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            :root {
+                --section-padding: 80px;
+            }
+            
+            .nav__toggle {
+                display: block;
+            }
+
+            .nav__list {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background-color: white;
+                flex-direction: column;
+                align-items: center;
+                padding: 2rem;
+                transition: var(--transition);
+                gap: 1.5rem;
+                overflow-y: auto;
+            }
+
+            .nav__list--active {
+                left: 0;
+            }
+
+            .hero {
+                padding: 150px 0 80px;
+            }
+
+            .hero__title {
+                font-size: 2.5rem;
+            }
+
+            .hero__subtitle {
+                font-size: 1.1rem;
+            }
+
+            .hero__buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .hero__buttons .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .section__title {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            :root {
+                --section-padding: 60px;
+            }
+            
+            .hero {
+                padding: 130px 0 60px;
+            }
+
+            .hero__title {
+                font-size: 2rem;
+            }
+
+            .section__title {
+                font-size: 1.8rem;
+                margin-bottom: 2rem;
+            }
+
+            .card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container header__inner">
+            <a href="#" class="header__logo">
+                <svg class="header__logo-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+                ГУК Высотка
+            </a>
+						<nav class="nav">
+								<button class="nav__toggle" id="navToggle">
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+												<line x1="3" y1="12" x2="21" y2="12"></line>
+												<line x1="3" y1="6" x2="21" y2="6"></line>
+												<line x1="3" y1="18" x2="21" y2="18"></line>
+										</svg>
+								</button>
+								<ul class="nav__list" id="navList">
+										<li class="nav__item"><a href="#about" class="nav__link">О компании</a></li>
+										<li class="nav__item"><a href="#location" class="nav__link">Как найти</a></li>
+										<li class="nav__item"><a href="#vacancies" class="nav__link">Вакансии</a></li>
+										<li class="nav__item"><a href="#schedule" class="nav__link">Режим работы</a></li>
+										<li class="nav__item"><a href="#contact" class="nav__link">Контакты</a></li>
+								</ul>
+							</nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero__pattern"></div>
+        <div class="container">
+            <div class="hero__inner">
+                <div class="hero__content">
+                    <h1 class="hero__title fade-in">Профессиональное управление жилыми комплексами</h1>
+                    <p class="hero__subtitle fade-in delay-1">ООО "ГУК Высотка" обеспечивает комфортные условия проживания с 2010 года. Наша команда профессионалов заботится о вашем уюте и безопасности.</p>
+                    <div class="hero__buttons fade-in delay-2">
+                        <a href="#contact" class="btn">
+                            <svg class="btn__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                <polyline points="22,6 12,13 2,6"></polyline>
+                            </svg>
+                            Связаться с нами
+                        </a>
+                        <a href="#about" class="btn btn--secondary">
+                            <svg class="btn__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="8" x2="12" y2="12"></line>
+                                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                            </svg>
+                            Подробнее
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section section--light" id="about">
+        <div class="container">
+            <div class="section__header">
+                <h2 class="section__title fade-in">О нашей <span>организации</span></h2>
+                <p class="section__subtitle fade-in delay-1">ООО "ГУК Высотка" - это команда профессионалов, обеспечивающая комфортные условия проживания в жилых комплексах с 2010 года.</p>
+            </div>
+            <div class="grid">
+                <div class="card fade-in">
+                    <div class="card__icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                    </div>
+                    <h3 class="card__title">Наша миссия</h3>
+                    <p class="card__text">Обеспечение комфортных и безопасных условий проживания для жителей обслуживаемых домов, поддержание инженерных систем в исправном состоянии и оперативное решение возникающих вопросов.</p>
+                  </div>
+                <div class="card fade-in delay-1">
+                    <div class="card__icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="23 7 16 12 23 17"></polyline>
+                            <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
+                        </svg>
+                    </div>
+                    <h3 class="card__title">Наши ценности</h3>
+                    <p class="card__text">Профессионализм, ответственность, открытость к диалогу, постоянное развитие и внедрение современных технологий в сфере ЖКХ.</p>
+                  </div>
+                <div class="card fade-in delay-2">
+                    <div class="card__icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                            <polyline points="10 9 9 9 8 9"></polyline>
+                        </svg>
+                    </div>
+                    <h3 class="card__title">Наша история</h3>
+                    <p class="card__text">Компания работает на рынке жилищно-коммунальных услуг с 2010 года. За это время мы накопили значительный опыт и создали надежную команду профессионалов.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section section--gray" id="location">
+        <div class="container">
+            <div class="section__header">
+                <h2 class="section__title fade-in">Как нас <span>найти</span></h2>
+                <p class="section__subtitle fade-in delay-1">Наши офисы и службы расположены по следующим адресам</p>
+            </div>
+            <div id="map" class="map fade-in"></div>
+            <div class="grid" style="margin-top: 2rem;">
+                <div class="card fade-in">
+                    <h3 class="card__title">Юридический адрес</h3>
+                    <p class="card__text">355042, Ставропольский край, ул. Доваторцев, 59/2</p>
+                </div>
+                <div class="card fade-in delay-1">
+                    <h3 class="card__title">Абонентский отдел</h3>
+                    <p class="card__text">355042, Ставропольский край, ул. Доваторцев, 44/2</p>
+                </div>
+                <div class="card fade-in delay-2">
+                    <h3 class="card__title">Аварийные службы</h3>
+                    <p class="card__text">Теплосети: 90-17-56<br>ВДЭС: 009, 260-300<br>Ставрополькрайлифт: 28-17-86</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section section--light" id="vacancies">
+        <div class="container">
+            <div class="section__header">
+                <h2 class="section__title fade-in">Открытые <span>вакансии</span></h2>
+                <p class="section__subtitle fade-in delay-1">Присоединяйтесь к нашей команде профессионалов</p>
+            </div>
+            <div class="grid">
+                <div class="vacancy fade-in delay-1">
+                    <h3 class="vacancy__title">Дворник</h3>
+                    <span class="vacancy__salary">Оклад 9500 руб.</span>
+                    <div class="vacancy__meta">
+                        <span class="vacancy__meta-item">
+                            <svg class="vacancy__meta-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                                <path d="M2 10h20M7 15h1m4 0h1m4 0h1"></path>
+                            </svg>
+                            Полный день
+                        </span>
+                        <span class="vacancy__meta-item">
+                            <svg class="vacancy__meta-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                <circle cx="12" cy="10" r="3"></circle>
+                            </svg>
+                            ул. Доваторцев
+                        </span>
+                    </div>
+                    <p>Обслуживание электрооборудования жилых домов. Требуется опыт работы, группа допуска не ниже III.</p>
+                    <a href="#contact" class="btn" style="margin-top: 1.5rem; display: inline-block;">Откликнуться</a>
+                </div>
+            </div>
+            <div class="card fade-in" style="max-width: 800px; margin: 3rem auto 0; text-align: center;">
+                <h3 class="card__title">Как откликнуться на вакансию?</h3>
+                <p>Отправьте резюме на электронную почту <a href="mailto:geu14@bk.ru">geu14@bk.ru</a> с указанием интересующей вакансии или звоните по телефону <a href="tel:+78652225122">22-51-22</a>.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section section--dark" id="schedule">
+        <div class="container">
+            <div class="section__header">
+                <h2 class="section__title fade-in">Режим <span>работы</span></h2>
+                <p class="section__subtitle fade-in delay-1">Часы работы наших служб и отделов</p>
+            </div>
+            <div class="grid">
+                <div class="card card--dark fade-in">
+                    <h3 class="card__title">Основной режим</h3>
+                    <div class="schedule">
+                        <div class="schedule__item">
+                            <span class="schedule__days">Понедельник - Четверг</span>
+                            <span class="schedule__time">8:00 - 17:00</span>
+                        </div>
+                        <div class="schedule__item">
+                            <span class="schedule__days">Пятница</span>
+                            <span class="schedule__time">8:00 - 16:00</span>
+                        </div>
+                        <div class="schedule__item">
+                            <span class="schedule__days">Обеденный перерыв</span>
+                            <span class="schedule__time">12:00 - 12:45</span>
+                        </div>
+                        <div class="schedule__item">
+                            <span class="schedule__days">Суббота, Воскресенье</span>
+                            <span class="schedule__time">Выходной</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card card--dark fade-in delay-1">
+                    <h3 class="card__title">Прием заявок</h3>
+                    <div class="schedule">
+                        <div class="schedule__item">
+                            <span class="schedule__days">Понедельник - Четверг</span>
+                            <span class="schedule__time">8:00 - 17:00</span>
+                        </div>
+                        <div class="schedule__item">
+                            <span class="schedule__days">Пятница</span>
+                            <span class="schedule__time">8:00 - 16:00</span>
+                        </div>
+                        <div class="schedule__item">
+                            <span class="schedule__days">Обеденный перерыв</span>
+                            <span class="schedule__time">12:00 - 12:45</span>
+                        </div>
+                        <div class="schedule__item">
+                            <span class="schedule__days">Телефон</span>
+                            <span class="schedule__time"><a href="tel:+78652225122">22-51-22</a></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card card--dark fade-in delay-2">
+                    <h3 class="card__title">Абонентский отдел</h3>
+                    <p style="margin-bottom: 1.5rem;">ул. Доваторцев, 44/2</p>
+                    <div class="schedule">
+                        <div class="schedule__item">
+                            <span class="schedule__days">Понедельник - Четверг</span>
+                            <span class="schedule__time">8:00 - 17:00</span>
+                        </div>
+                        <div class="schedule__item">
+                            <span class="schedule__days">Пятница</span>
+                            <span class="schedule__time">8:00 - 16:00</span>
+                        </div>
+                        <div class="schedule__item">
+                            <span class="schedule__days">Обеденный перерыв</span>
+                            <span class="schedule__time">12:00 - 12:45</span>
+                        </div>
+                        <div class="schedule__item">
+                            <span class="schedule__days">Телефоны</span>
+                            <span class="schedule__time"><a href="tel:+78652772438">77-24-38</a>, <a href="tel:+78652720988">72-09-88</a></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section section--light" id="requisites">
+        <div class="container">
+            <div class="section__header">
+                <h2 class="section__title fade-in">Реквизиты <span>компании</span></h2>
+                <p class="section__subtitle fade-in delay-1">Юридическая информация и банковские реквизиты</p>
+            </div>
+            <div class="requisites fade-in">
+                <div class="requisites__item">
+                    <span class="requisites__label">Наименование:</span>
+                    <span class="requisites__value">Общество с ограниченной ответственностью "ГУК Высотка"</span>
+                </div>
+                <div class="requisites__item">
+                    <span class="requisites__label">ИНН:</span>
+                    <span class="requisites__value">2635131585</span>
+                </div>
+                <div class="requisites__item">
+                    <span class="requisites__label">КПП:</span>
+                    <span class="requisites__value">263501001</span>
+                </div>
+                <div class="requisites__item">
+                    <span class="requisites__label">ОГРН:</span>
+                    <span class="requisites__value">1102635002062</span>
+                </div>
+                <div class="requisites__item">
+                    <span class="requisites__label">ОКПО:</span>
+                    <span class="requisites__value">63910660</span>
+                </div>
+                <div class="requisites__item">
+                    <span class="requisites__label">р/с:</span>
+                    <span class="requisites__value">40702810660220002215</span>
+                </div>
+                <div class="requisites__item">
+                    <span class="requisites__label">к/с:</span>
+                    <span class="requisites__value">30101810907020000615</span>
+                </div>
+                <div class="requisites__item">
+                    <span class="requisites__label">БИК:</span>
+                    <span class="requisites__value">040702615</span>
+                </div>
+                <div class="requisites__item">
+                    <span class="requisites__label">Дата регистрации:</span>
+                    <span class="requisites__value">15.02.2010 (ИФНС России по Промышленному району г.Ставрополя, код 2635)</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section section--gray" id="contact">
+        <div class="container">
+            <div class="section__header">
+                <h2 class="section__title fade-in">Связаться <span>с нами</span></h2>
+                <p class="section__subtitle fade-in delay-1">Мы всегда рады ответить на ваши вопросы</p>
+            </div>
+            <div class="grid">
+                <div class="card fade-in">
+                    <h3 class="card__title">Контакты</h3>
+                    <div class="footer__contact">
+                        <svg class="footer__contact-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                        </svg>
+                        <div>
+                            <strong>Прием заявок:</strong> <a href="tel:+78652741840">74-18-40</a><br>
+                            <strong>Аварийно-ремонтная служба теплосети:</strong> <a href="tel:+78652901756">90-17-56</a><br>
+                            <strong>Аварийно-ремонтная служба ВДЭС:</strong> <a href="tel:009">009</a>, <a href="tel:+78652260300">260-300</a><br>
+                            <strong>Аварийная служба Ставрополькрайлифт:</strong> <a href="tel:+78652281786">28-17-86</a>
+                        </div>
+                    </div>
+                    <div class="footer__contact">
+                        <svg class="footer__contact-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                            <polyline points="22,6 12,13 2,6"></polyline>
+                        </svg>
+                        <div>
+                            <a href="mailto:geu14@bk.ru">geu14@bk.ru</a><br>
+                            <a href="mailto:guk.dovatorcev44.2@mail.ru">guk.dovatorcev44.2@mail.ru</a><br>
+                            <a href="mailto:gukprospekt1@mail.ru">gukprospekt1@mail.ru</a>
+                        </div>
+                    </div>
+                    <div class="footer__contact">
+                        <svg class="footer__contact-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                            <circle cx="12" cy="10" r="3"></circle>
+                        </svg>
+                        <div>
+                            <strong>Юридический адрес:</strong> 355042, Ставропольский край, ул. Доваторцев, 59/2<br>
+                            <strong>Фактический адрес:</strong> 355042, Ставропольский край, ул. Доваторцев, 59/2
+                        </div>
+                    </div>
+                    <div class="footer__contact">
+                        <svg class="footer__contact-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                        <div>
+                            <strong>Режим работы:</strong> пн-чт с 8-00 до 17-00, пт. с 8-00 до 16-00, перерыв с 12-00 до 12-45, вых: суб., воск.
+                        </div>
+                    </div>
+                    <div class="footer__contact">
+                        <svg class="footer__contact-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                        </svg>
+                        <div>
+                            <strong>Прием заявок:</strong> пн-чт с 8-00 до 17-00, пт. с 8-00 до 16-00, перерыв с 12-00 до 12-45, вых: суб., воск., тел. <a href="tel:+78652225122">22-51-22</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card fade-in delay-1">
+                    <h3 class="card__title">Форма обратной связи</h3>
+                    <form class="contact-form" id="feedbackForm">
+                        <div class="form-group">
+                            <label for="name" class="form-group__label">Ваше имя</label>
+                            <input type="text" id="name" class="form-group__input" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="form-group__label">Email или телефон</label>
+                            <input type="text" id="email" class="form-group__input" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject" class="form-group__label">Тема обращения</label>
+                            <select id="subject" class="form-group__input">
+                                <option value="">Выберите тему</option>
+                                <option value="question">Вопрос</option>
+                                <option value="claim">Жалоба</option>
+                                <option value="suggestion">Предложение</option>
+                                <option value="vacancy">Вакансия</option>
+                                <option value="other">Другое</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message" class="form-group__label">Сообщение</label>
+                            <textarea id="message" class="form-group__textarea" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn--block">
+                            Отправить сообщение
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__grid">
+                <div class="footer__col">
+                    <div class="footer__logo">
+                        <svg class="footer__logo-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                        </svg>
+                        ГУК Высотка
+                    </div>
+                    <p class="footer__description">ООО "ГУК Высотка" - профессиональное управление жилыми комплексами с 2010 года. Мы обеспечиваем комфортные и безопасные условия проживания.</p>
+                </div>
+                <div class="footer__col">
+                    <h3 class="footer__title">Контакты</h3>
+                    <div class="footer__contact">
+                        <svg class="footer__contact-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                            <circle cx="12" cy="10" r="3"></circle>
+                        </svg>
+                        <a href="#">355042, Ставропольский край, ул. Доваторцев, 59/2</a>
+                    </div>
+                    <div class="footer__contact">
+                        <svg class="footer__contact-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                        </svg>
+                        <a href="tel:+78652741840">74-18-40</a>
+                    </div>
+                    <div class="footer__contact">
+                        <svg class="footer__contact-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                            <polyline points="22,6 12,13 2,6"></polyline>
+                        </svg>
+                        <a href="mailto:geu14@bk.ru">geu14@bk.ru</a>
+                    </div>
+                </div>
+                <div class="footer__col">
+                    <h3 class="footer__title">Навигация</h3>
+                    <a href="#about" class="footer__contact">О компании</a>
+                    <a href="#location" class="footer__contact">Как нас найти</a>
+                    <a href="#vacancies" class="footer__contact">Вакансии</a>
+                    <a href="#schedule" class="footer__contact">Режим работы</a>
+                    <a href="#requisites" class="footer__contact">Реквизиты</a>
+                    <a href="#contact" class="footer__contact">Контакты</a>
+                </div>
+            </div>
+            <div class="footer__copy">
+                &copy; 2025 ООО "ГУК Высотка". Все права защищены.
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://api-maps.yandex.ru/2.1/?apikey=ваш_API_ключ&lang=ru_RU"></script>
+    <script>
+        // Мобильное меню
+        const navToggle = document.getElementById('navToggle');
+        const navList = document.getElementById('navList');
+        const navLinks = document.querySelectorAll('.nav__link');
+
+        navToggle.addEventListener('click', () => {
+            navList.classList.toggle('nav__list--active');
+            document.body.style.overflow = navList.classList.contains('nav__list--active') ? 'hidden' : '';
+        });
+
+        // Закрытие меню при клике на ссылку
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                navList.classList.remove('nav__list--active');
+                document.body.style.overflow = '';
+            });
+        });
+
+        // Подсветка активного пункта меню при скролле
+        const sections = document.querySelectorAll('section');
+        
+        window.addEventListener('scroll', () => {
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                
+                if (pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('nav__link--active');
+                if (link.getAttribute('href').includes(current)) {
+                    link.classList.add('nav__link--active');
+                }
+            });
+        });
+
+        // Плавная прокрутка
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                if (navList.classList.contains('nav__list--active')) {
+                    navList.classList.remove('nav__list--active');
+                    document.body.style.overflow = '';
+                }
+
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Анимации при скролле
+        const animateOnScroll = () => {
+            const elements = document.querySelectorAll('.fade-in');
+            const windowHeight = window.innerHeight;
+            
+            elements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementPosition < windowHeight - elementVisible) {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }
+            });
+        };
+
+        window.addEventListener('scroll', animateOnScroll);
+        window.addEventListener('load', animateOnScroll);
+
+        // Обработка формы
+        const feedbackForm = document.getElementById('feedbackForm');
+        
+        feedbackForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Здесь должна быть логика отправки формы
+            alert('Спасибо за ваше сообщение! Мы свяжемся с вами в ближайшее время.');
+            feedbackForm.reset();
+        });
+
+        // Инициализация Яндекс Карты
+        ymaps.ready(function () {
+            var myMap = new ymaps.Map('map', {
+                center: [45.0428, 41.9734], // Координаты Ставрополя
+                zoom: 12
+            });
+
+            // Добавляем метки на карту
+            var office1 = new ymaps.Placemark([45.0428, 41.9734], {
+                balloonContent: 'ООО "ГУК Высотка"<br>ул. Доваторцев, 59/2'
+            }, {
+                preset: 'islands#blueStretchyIcon'
+            });
+
+            var office2 = new ymaps.Placemark([45.0428, 41.9734], {
+                balloonContent: 'Абонентский отдел<br>ул. Доваторцев, 44/2'
+            }, {
+                preset: 'islands#blueStretchyIcon'
+            });
+
+            myMap.geoObjects.add(office1);
+            myMap.geoObjects.add(office2);
+        });
+    </script>
+</body>
+</html>
